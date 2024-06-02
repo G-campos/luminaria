@@ -55,8 +55,8 @@ Este projeto visa controlar uma luminária RGB utilizando um microcontrolador No
 2. **Configure o WiFi**:
    - No arquivo `network.cpp`, configure as credenciais da sua rede WiFi:
      ```cpp
-        const char* ssid = \"SEU_SSID\";
-        const char* password = \"SUA_SENHA\";
+        const char* ssid = "SEU_SSID";
+        const char* password = "SUA_SENHA";
      ```
 
 3. **Compile e envie o código para o NodeMCU**:
