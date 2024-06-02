@@ -11,8 +11,8 @@
 
 #include "network.h"
 
-const char* ssid = "sua rede aqui";
-const char* password = "senha da sua rede";
+const char* ssid = "SEU_SSID";
+const char* password = "SUA_SENHA";
 const char* hostName = "luminaria";
 
 void setupWiFi() {

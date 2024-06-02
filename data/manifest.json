@@ -1,0 +1,15 @@
+{
+    "name": "Luminaria Senai",
+    "short_name": "Luminaria",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#000000",
+    "description": "Controle da luminaria via PWA",
+    "icons": [
+      {
+        "src": "https://cdn.iconscout.com/icon/premium/png-256-thumb/lamp-796-783969.png",
+        "sizes": "256x256",
+        "type": "image/png"
+      }
+    ]
+  }
