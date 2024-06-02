@@ -94,7 +94,7 @@ nodemcu-luminaria/
 
 ### Arquivos principais:
 
-- `main.ino`: Arquivo principal que configura e gerencia a execução do programa.
+- `luminaria.ino`: Arquivo principal que configura e gerencia a execução do programa.
 - `httpserver.cpp/h`: Configuração e manipulação do servidor HTTP.
 - `json.cpp/h`: Tratamento de dados JSON.
 - `network.cpp/h`: Configuração da rede WiFi e mDNS.
@@ -113,6 +113,3 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull re
 ## Licença
 
 Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-```
-
-Este arquivo `README.md` fornece uma visão geral completa do seu projeto, incluindo uma descrição, funcionalidades, tecnologias utilizadas, instruções de instalação e configuração, como usar, a estrutura do projeto, como contribuir e informações de licença. Ajuste conforme necessário para refletir detalhes específicos do seu projeto.
