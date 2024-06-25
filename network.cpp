@@ -3,8 +3,8 @@
 
 #include "network.h"
 
-const char* ssid = "S21";
-const char* password = "12345678";
+const char* ssid = "AndroidAP1C68";
+const char* password = "ANDERSON";
 const char* hostName = "luminaria";
 
 void setupWiFi() {

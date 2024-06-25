@@ -17,11 +17,12 @@
 
 #define touch D2
 #define rele D5
-
 int red = 0;
 int green = 0;
 int blue = 0;
+int n = 15;
 
+bool controle ;
 bool ctrl = false;
 int estado = 0;
 
@@ -30,8 +31,12 @@ void lebotao(){
   Serial.println(ctrl);
 }
 
+
 void setup() {
   Serial.begin(115200);
+  // Inicializa o gerador de números aleatórios com uma semente
+  randomSeed(analogRead(A0));
+
   setupWiFi();
   setupMDNS();
   setupWebSocket();
@@ -52,86 +57,132 @@ void loop() {
   // analogWrite(verde, green);
   // analogWrite(vermelho, red);
 
-  webSocket.loop();
-  server.handleClient();
+  int randomValue1 = random(0, 256);
+  int randomValue2 = random(0, 256);
+  int randomValue3 = random(0, 256);
 
-  MDNS.update();
-
+  Serial.println(estado);
   switch(estado){
     case 0:
-    digitalWrite(rele, LOW);
-    lebotao();
-    if(ctrl == true){
-      estado = 1;
-    }
+      // clickRele();
+      lebotao();
+      controle = false;
+      if(ctrl == true){
+        estado = 1;
+      }
     break;
 
     case 1:
-    lebotao();
-    if(ctrl == false){
-      estado = 10;
-    }
+      // clickRele();
+      lebotao();
+      if(ctrl == false){
+        estado = 10;
+      }
     break;
 
     case 10:
-    lebotao();
-    red = (globalLightIntensity * globalColoRed)/100;
-    green = (globalLightIntensity * globalColoGreen)/100;
-    blue = (globalLightIntensity * globalColoBlue)/100;
-    analogWrite(azul, blue);
-    analogWrite(vermelho, red);
-    analogWrite(verde, green);
-    if(ctrl == true){
-      analogWrite(azul, 0);
-      analogWrite(vermelho, 0);
-      analogWrite(verde, 0);
-      estado = 20;
-    }
+      // clickRele();
+      webSocket.loop();
+      server.handleClient();
+      MDNS.update();
+
+      lebotao();
+      red = (globalLightIntensity * globalColoRed)/100;
+      green = (globalLightIntensity * globalColoGreen)/100;
+      blue = (globalLightIntensity * globalColoBlue)/100;
+      analogWrite(azul, blue);
+      analogWrite(vermelho, red);
+      analogWrite(verde, green);
+      if(ctrl == true){
+        analogWrite(azul, 0);
+        analogWrite(vermelho, 0);
+        analogWrite(verde, 0);
+        estado = 20;
+      }
     break;
 
     case 20:
+    // clickRele();
     lebotao();
     if(ctrl == false){
+      controle = true;
+    }
+      if(controle == true){
+
       digitalWrite(rele, HIGH);
       lebotao();
-       if(ctrl == HIGH){
+       if(ctrl == true){
       estado = 21;
+        }
       }
-    }
     
     break;
 
-    case 21: //reinicia o ciclo
+    case 21:
+      lebotao();
+      if(ctrl == false){
+        estado = 22;
+        digitalWrite(rele, LOW);
+      }
+    break;
+
+    case 22: //reinicia o ciclo
+      controle = false;
+      lebotao();
+      analogWrite(azul, randomValue1);
+      analogWrite(vermelho, randomValue2);
+      analogWrite(verde, randomValue3);
+      delay(200);
+      if(ctrl == true){
+        estado = 23;
+      }
+    break;
+
+    // case 22: //reinicia o ciclo
+    //   clickRele();
+    //   controle = false;
+    //   lebotao();
+    //   for(int i = 0; i<255; i = i + n){
+    //     lebotao();
+    //     analogWrite(azul, i);
+    //     delay(100);
+    //   }
+    //   for(int i = 0; i<255; i = i + n){
+    //     lebotao();
+    //     analogWrite(vermelho, i);
+    //     delay(100);
+    //   }
+    //   for(int i = 0; i<255; i = i + n){
+    //     lebotao();
+    //     analogWrite(verde, i);
+    //     delay(100);
+    //   }
+    //   for(int i = 255; i>0; i = i - n){
+    //     lebotao();
+    //     analogWrite(azul, i);
+    //     delay(100);
+    //   }
+    //   for(int i = 255; i>0; i = i - n){
+    //     lebotao();
+    //     analogWrite(vermelho, i);
+    //     delay(100);
+    //   }
+    //   for(int i = 255; i>0; i = i - n){
+    //     lebotao();
+    //     analogWrite(verde, i);
+    //     delay(100);
+    //   }
+    //   if(ctrl == true){
+    //     estado = 23;
+    //   }
+    // break;
+
+    case 23:
     lebotao();
-    digitalWrite(rele, LOW);
     if(ctrl == false){
-      for(int i = 0; i<255; i++){
-        analogWrite(azul, i);
-        delay(10);
-      }
-      for(int i = 0; i<255; i++){
-        analogWrite(vermelho, i);
-        delay(10);
-      }
-      for(int i = 0; i<255; i++){
-        analogWrite(verde, i);
-        delay(10);
-      }
-      for(int i = 255; i>0; i--){
-        analogWrite(azul, i);
-        delay(10);
-      }
-      for(int i = 255; i>0; i--){
-        analogWrite(vermelho, i);
-        delay(10);
-      }
-      for(int i = 255; i>0; i--){
-        analogWrite(verde, i);
-        delay(10);
-      }
-    } else {
       estado = 0;
     }
+    break;
   }
 }
 
